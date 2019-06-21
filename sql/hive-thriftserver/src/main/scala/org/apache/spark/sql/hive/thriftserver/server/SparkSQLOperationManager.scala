@@ -92,12 +92,14 @@ private[thriftserver] class SparkSQLOperationManager()
     operation
   }
 
+
+
   override def newGetColumnsOperation(
       parentSession: HiveSession,
       catalogName: String,
       schemaName: String,
       tableName: String,
-      columnName: String): MetadataOperation = synchronized {
+      columnName: String): GetColumnsOperation = synchronized {
     val sqlContext = sessionToContexts.get(parentSession.getSessionHandle)
     require(sqlContext != null, s"Session handle: ${parentSession.getSessionHandle} has not been" +
       " initialized or had already closed.")
@@ -107,6 +109,8 @@ private[thriftserver] class SparkSQLOperationManager()
     logDebug(s"Created GetColumnsOperation with session=$parentSession.")
     operation
   }
+
+
 
   def setConfMap(conf: SQLConf, confMap: java.util.Map[String, String]): Unit = {
     val iterator = confMap.entrySet().iterator()
